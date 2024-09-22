@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import ProjectForm from "@/components/projects/ProjectForm";
-import { ProjectFormData } from "types";
+import { ProjectFormData } from "@/types/index";
+import { createProject } from "@/apis/ProjectAPI";
 
 export default function CreateProjectView() {
+    const navigate = useNavigate()
     const initialValues: ProjectFormData = {
         projectName: '',
         clientName: '',
@@ -11,15 +14,17 @@ export default function CreateProjectView() {
     }
     const { register, handleSubmit, formState: {errors}} = useForm({defaultValues: initialValues})
 
-    const handleForm = (data: ProjectFormData) => {
-        console.log(data)
+    const handleForm = async (formData: ProjectFormData) => {
+        const data = await createProject(formData)
+        toast.success(data)
+        navigate('/')
     }
 
   return (
     <>
     <div className="max-w-3xl mx-auto">
         <h1 className="text-5xl font-bold">Create Project</h1>
-        <p className="text-2xl font-light text-gray-500 mt-5">
+        <p className="mt-5 text-2xl font-light text-gray-500">
             Fill out the following form to create a new project
         </p>
 
@@ -33,7 +38,7 @@ export default function CreateProjectView() {
         </nav>
 
         <form 
-            className="mt-10 bg-white shadow-lg p-10 rounded-2xl"
+            className="p-10 mt-10 bg-white shadow-lg rounded-2xl"
             onSubmit={handleSubmit(handleForm)}
             noValidate
         >
@@ -43,7 +48,7 @@ export default function CreateProjectView() {
             />
             <input type="submit" 
                 value={'Create Project'}
-                className="btn-intense w-full"
+                className="w-full btn-intense"
             />
         </form>
       </div>

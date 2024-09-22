@@ -1,4 +1,6 @@
 import { Outlet } from "react-router-dom"
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Logo from "@/components/Logo"
 import NavMenu from "@/components/NavMenu"
 
@@ -6,9 +8,9 @@ export default function AppLayout() {
   return (
     <>
         <header
-            className="bg-gray-800 py-5"
+            className="py-5 bg-gray-800"
         >
-            <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row justify-between items-center">
+            <div className="flex flex-col items-center justify-between mx-auto max-w-screen-2xl lg:flex-row">
                 <div className="w-64">
                     <Logo />
                 </div>
@@ -17,7 +19,7 @@ export default function AppLayout() {
             </div>
 
         </header>
-        <section className="max-w-screen-2xl mx-auto mt-5 p-5">
+        <section className="p-5 mx-auto mt-5 max-w-screen-2xl">
             <Outlet />
         </section>
 
@@ -25,12 +27,17 @@ export default function AppLayout() {
             <p className="text-center">
                 Todos los derechos reservados {new Date().getFullYear()}
             </p>
-            <p className="text-center italic text-gray-400 transition text-sm">
+            <p className="text-sm italic text-center text-gray-400 transition">
                 Coded by 
-                <a href="https://github.com/misterdan100" target="_blank" className="text-sky-500 italic hover:text-sky-300"> Daniel Caceres</a>
+                <a href="https://github.com/misterdan100" target="_blank" className="italic text-sky-500 hover:text-sky-300"> Daniel Caceres</a>
             </p>
 
         </footer>
+
+        <ToastContainer 
+            hideProgressBar
+            closeOnClick
+        />
     </>
   )
 }

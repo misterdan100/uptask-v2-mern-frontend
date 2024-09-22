@@ -1,10 +1,10 @@
 .btn-normal {
-    @apply bg-orange-300 hover:bg-orange-400 px-10 py-2 text-white text-xl font-semibold cursor-pointer transition-colors rounded-2xl border-2 border-transparent hover:border-orange-500 hover:shadow-sm;
+    @apply px-10 py-2 text-xl font-semibold text-white transition-colors bg-orange-300 border-2 border-transparent cursor-pointer hover:bg-orange-400 rounded-2xl hover:border-orange-500 hover:shadow-sm;
 }
 
 .btn-intense {
     @apply btn-normal ;
-    @apply bg-orange-100 text-gray-800 border-orange-300 hover:bg-orange-200 hover:border-orange-300;
+    @apply text-gray-800 bg-orange-100 border-orange-300 hover:bg-orange-200 hover:border-orange-300;
 }
 
 .inputs {
