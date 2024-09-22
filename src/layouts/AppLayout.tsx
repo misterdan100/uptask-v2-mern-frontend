@@ -14,8 +14,6 @@ export default function AppLayout() {
                 </div>
 
                 <NavMenu />
-
-                
             </div>
 
         </header>
@@ -27,7 +25,7 @@ export default function AppLayout() {
             <p className="text-center">
                 Todos los derechos reservados {new Date().getFullYear()}
             </p>
-            <p className="text-center italic text-gray-400 transition">
+            <p className="text-center italic text-gray-400 transition text-sm">
                 Coded by 
                 <a href="https://github.com/misterdan100" target="_blank" className="text-sky-500 italic hover:text-sky-300"> Daniel Caceres</a>
             </p>
