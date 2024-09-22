@@ -37,6 +37,7 @@ export default function AppLayout() {
         <ToastContainer 
             hideProgressBar
             closeOnClick
+            autoClose={4000}
         />
     </>
   )
