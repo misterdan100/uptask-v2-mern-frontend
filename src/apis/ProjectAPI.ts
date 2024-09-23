@@ -33,10 +33,11 @@ export async function getProjects() {
 export async function getProjectById(id: Project['_id']) {
     try {
         const { data } = await api(`/projects/${id}`)
-        const response = projectSchemas.safeParse(data)
-        if(response.success) {
-            return response.data
-        }
+        // const response = projectSchemas.safeParse(data)
+        // if(response.success) {
+        //     return response.data
+        // }
+        return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)

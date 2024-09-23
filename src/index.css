@@ -14,3 +14,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+* ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+* ::-webkit-scrollbar-thumb {
+    background: #a9a9a9;
+    border-radius: 4px;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+* ::-webkit-scrollbar-thumb:hover {
+    background: #fdba74;
+}
