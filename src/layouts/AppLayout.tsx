@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom"
+import { Link, Outlet } from "react-router-dom"
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Logo from "@/components/Logo"
@@ -8,11 +8,13 @@ export default function AppLayout() {
   return (
     <>
         <header
-            className="py-5 bg-gray-800"
+            className="py-5 pr-5 bg-gray-800"
         >
             <div className="flex flex-col items-center justify-between mx-auto max-w-screen-2xl lg:flex-row">
                 <div className="w-64">
-                    <Logo />
+                    <Link to={'/'}>
+                        <Logo />
+                    </Link>
                 </div>
 
                 <NavMenu />

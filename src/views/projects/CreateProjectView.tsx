@@ -31,19 +31,24 @@ export default function CreateProjectView() {
   return (
     <>
     <div className="max-w-3xl mx-auto">
-        <h1 className="text-5xl font-bold">Create Project</h1>
-        <p className="mt-5 text-2xl font-light text-gray-500">
-            Fill out the following form to create a new project
-        </p>
+        <div className="flex flex-wrap justify-between ">
+            <div>
 
-        <nav className="my-5">
-            <Link
-            to={"/"}
-            className="btn-normal"
-            >
-            Go Projects
-            </Link>
-        </nav>
+                <h1 className="text-5xl font-bold">Create Project</h1>
+                <p className="mt-5 text-2xl font-light text-gray-500">
+                    Fill out the following form to create a new project
+                </p>
+            </div>
+
+            <nav className="my-5">
+                <Link
+                to={"/"}
+                className="btn-normal"
+                >
+                Go Projects
+                </Link>
+            </nav>
+        </div>
 
         <form 
             className="p-10 mt-10 bg-white shadow-lg rounded-2xl"
