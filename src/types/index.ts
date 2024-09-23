@@ -1,5 +1,17 @@
 import { z } from 'zod'
 
+/** TASK TYPES */
+export const taskStatusSchema = z.enum(["inProgress" , "pending" , "onHold" , "underReview" , "completed"])
+export const taskSchema = z.object({
+    _id: z.string(),
+    name: z.string(),
+    description: z.string(),
+    project: z.string(),
+    status: taskStatusSchema,
+})
+export type Task = z.infer<typeof taskSchema>
+export type TaskFormData = Pick<Task, 'name' | 'description'>
+
 /** PROJECTS TYPES */
 export const projectSchemas = z.object({
     _id: z.string(),
@@ -18,5 +30,6 @@ export const dashboardProjectSchema = z.array(
     })
 )
 
+/** TS Types */
 export type Project = z.infer<typeof projectSchemas>
 export type ProjectFormData = Pick<Project, 'clientName' | 'description' | 'projectName'>

@@ -58,7 +58,7 @@ export default function DashboardView() {
                 <div className="flex min-w-0 gap-x-4">
                   <div className="flex-auto min-w-0 space-y-2">
                     <Link
-                      to={``}
+                      to={`/projects/${project._id}`}
                       className="text-3xl font-bold text-gray-600 transition-colors cursor-pointer hover:text-orange-400"
                     >
                       {project.projectName}
@@ -93,7 +93,7 @@ export default function DashboardView() {
                       <Menu.Items className="absolute right-0 z-10 w-56 py-2 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-gray-900/5 focus:outline-none ">
                         <Menu.Item>
                           <Link
-                            to={``}
+                            to={`/projects/${project._id}`}
                             className="block px-3 py-1 text-sm leading-6 text-gray-900 transition-colors hover:bg-gray-100"
                           >
                             View Project
