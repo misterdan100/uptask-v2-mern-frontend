@@ -89,7 +89,7 @@ export default function AddTaskModal() {
                                         <TaskForm register={register} errors={errors}/>
                                         <input 
                                             type="submit"
-                                            className='w-full  btn-intense'
+                                            className='w-full btn-intense'
                                             value='Create Task'
                                         />
                                     </form>

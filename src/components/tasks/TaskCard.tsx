@@ -2,12 +2,15 @@ import { Fragment } from "react";
 import { Task } from "@/types";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { useNavigate } from "react-router-dom";
 
 type TaskCardProps = {
   task: Task;
 };
 
 export default function TaskCard({ task }: TaskCardProps) {
+  const navigate = useNavigate()
+
   return (
     <li className="flex justify-between gap-3 p-5 bg-white border border-slate-300 rounded-2xl">
       <div className="flex flex-col min-w-0 gap-y-2">
@@ -47,6 +50,7 @@ export default function TaskCard({ task }: TaskCardProps) {
                 <button
                   type="button"
                   className="block w-full px-3 py-1 text-sm leading-6 text-left text-gray-900 hover:bg-slate-100"
+                  onClick={() => navigate(location.pathname + `?editTask=${task._id}`)}
                 >
                   Edit Task
                 </button>
