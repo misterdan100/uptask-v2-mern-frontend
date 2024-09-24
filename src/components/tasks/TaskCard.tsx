@@ -2,14 +2,43 @@ import { Fragment } from "react";
 import { Task } from "@/types";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteTask } from "@/apis/TaskAPI";
+import { toast } from "react-toastify";
 
 type TaskCardProps = {
   task: Task;
 };
 
 export default function TaskCard({ task }: TaskCardProps) {
+
   const navigate = useNavigate()
+
+  const params = useParams()
+  const projectId = params.projectId!
+
+  const queryClient = useQueryClient()
+  const { mutate, } = useMutation({
+    mutationFn: deleteTask,
+    onError: (error) => {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['projectDetails', projectId]})
+      toast.update('deleteToast', {type: 'success', render: 'Task deleted', isLoading: false, autoClose: 3000})
+    },
+  })
+  
+  
+  const handleDelete = async () => {
+    toast.loading('Deleting task', {toastId: 'deleteToast', autoClose: false})
+    mutate({
+      taskId: task._id,
+      projectId
+    })
+  }
+
 
   return (
     <li className="flex justify-between gap-3 p-5 bg-white border border-slate-300 rounded-2xl">
@@ -60,6 +89,7 @@ export default function TaskCard({ task }: TaskCardProps) {
                 <button
                   type="button"
                   className="block w-full px-3 py-1 text-sm leading-6 text-left text-red-500 hover:bg-slate-100"
+                  onClick={handleDelete}
                 >
                   Delete Task
                 </button>
