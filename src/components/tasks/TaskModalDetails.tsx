@@ -6,10 +6,14 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getTaskById } from "@/apis/TaskAPI";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getTaskById, updateStatus } from "@/apis/TaskAPI";
 import { toast } from "react-toastify";
 import { formatDate } from "@/utils";
+import { statusTranslations } from "@/locales/es";
+import { Task } from "@/types";
+import { XMarkIcon } from "@heroicons/react/20/solid";
+import { statusBorder, statusOutline } from "@/locales/statusStyles";
 
 export default function TaskModalDetails() {
   const navigate = useNavigate();
@@ -25,12 +29,35 @@ export default function TaskModalDetails() {
 
   const showModal = taskId ? true : false;
 
-  const { data, isError, isLoading, isSuccess, error } = useQuery({
+  const { data, isError, error } = useQuery({
     queryKey: ["task", taskId],
     queryFn: () => getTaskById({ projectId, taskId }),
     retry: false,
     enabled: !!taskId,
   });
+
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: updateStatus,
+    onError: (error) => {
+        toast.error(error.message)
+    },
+    onSuccess: (data) => {
+        queryClient.invalidateQueries({queryKey: ['projectDetails', projectId]})
+        queryClient.invalidateQueries({queryKey: ["task", taskId]})
+        toast.success(data)
+        // navigate(`/projects/${projectId}`)
+    }
+  })
+
+  const handleChange = (newStatus: string) => {
+    const status = newStatus as Task['status']
+    mutate({
+        taskId,
+        projectId,
+        status,
+    }) 
+  }
   
 
   if (isError) {
@@ -71,7 +98,17 @@ export default function TaskModalDetails() {
                   leaveTo="opacity-0 scale-95"
                 >
                   <Dialog.Panel className="w-full max-w-4xl p-16 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                    <p className="text-sm text-slate-400">Create at: {formatDate(data.createdAt)}</p>
+                    <div
+                      className="absolute w-10 h-10 text-gray-400 cursor-pointer right-12 top-10 hover:text-gray-500"
+                      onClick={() => {
+                        navigate(location.pathname, { replace: true });
+                      }}
+                    >
+                      <XMarkIcon />
+                    </div>
+                    <p className="text-sm text-slate-400">
+                      Create at: {formatDate(data.createdAt)}
+                    </p>
                     <p className="text-sm text-slate-400">
                       Updated at: {formatDate(data.updatedAt)}
                     </p>
@@ -81,9 +118,27 @@ export default function TaskModalDetails() {
                     >
                       {data.name}
                     </Dialog.Title>
-                    <p className="mb-2 text-lg text-slate-500">Description: {data.description}</p>
-                    <div className="my-5 space-y-3">
-                      <label className="font-bold">Current Status: {data.status}</label>
+                    <p className="mb-2 text-lg text-slate-500">
+                      Description: {data.description}
+                    </p>
+                    <div className="flex flex-col my-5 space-y-1">
+                      <label className="font-bold">Current Status:</label>
+
+                      <select
+                        name=""
+                        id=""
+                        className={`px-3 py-2 bg-white border-2  max-w-60 rounded-2xl ${statusBorder[data.status]} focus:${statusBorder[data.status]} ${statusOutline[data.status]}` }
+                        defaultValue={data.status}
+                        onChange={(e) => handleChange(e.target.value)}
+                      >
+                        {Object.entries(statusTranslations).map(
+                          ([key, value]) => (
+                            <option key={key} value={key}>
+                              {value}
+                            </option>
+                          )
+                        )}
+                      </select>
                     </div>
                   </Dialog.Panel>
                 </Transition.Child>

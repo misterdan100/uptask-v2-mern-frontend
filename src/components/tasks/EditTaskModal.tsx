@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import { XMarkIcon } from '@heroicons/react/20/solid';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Task, TaskFormData } from '@/types';
 import { useForm } from 'react-hook-form';
@@ -33,6 +34,7 @@ export default function EditTaskModal({data}: EditTaskModalProps) {
             },
             onSuccess: (data) => {
                 queryClient.invalidateQueries({queryKey: ['projectDetails', projectId]})
+                queryClient.invalidateQueries({queryKey: ['taskDetails', taskId]})
                 toast.success(data)
                 reset()
                 navigate(location.pathname, {replace: true})
@@ -73,6 +75,11 @@ export default function EditTaskModal({data}: EditTaskModalProps) {
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel className="w-full max-w-4xl p-16 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                                <div className='absolute w-10 h-10 text-gray-400 cursor-pointer right-12 top-10 hover:text-gray-500'
+                                onClick={() => {navigate(location.pathname, {replace: true})}}
+                                >
+                                    <XMarkIcon />
+                                </div>
                                 <Dialog.Title
                                     as="h3"
                                     className="my-5 text-4xl font-black"
