@@ -87,6 +87,12 @@ export default function LoginView() {
         >
           Don't you have an account? Create one
         </Link>
+        <Link
+          to={"/auth/forgot-password"}
+          className="font-normal text-center text-gray-300 hover:text-gray-200"
+        >
+          Forgot your password?
+        </Link>
       </nav>
     </>
   );

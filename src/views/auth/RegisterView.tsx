@@ -144,6 +144,12 @@ export default function RegisterView() {
           to={'/auth/login'}
           className="font-normal text-center text-gray-300 hover:text-gray-200"
         >Don you already have an account? Login</Link>
+        <Link
+          to={"/auth/forgot-password"}
+          className="font-normal text-center text-gray-300 hover:text-gray-200"
+        >
+          Forgot your password?
+        </Link>
       </nav>
     </>
   )

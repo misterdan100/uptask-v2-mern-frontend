@@ -1,9 +1,9 @@
 export const statusStyles: {[key: string]: string} = {
-    pending: 'slate-300',
-    onHold: 'violet-300',
-    inProgress: 'sky-300',
-    underReview: 'amber-300',
-    completed: 'emerald-300',
+    pending: 'border-b-slate-300',
+    onHold: 'border-b-violet-300',
+    inProgress: 'border-b-sky-300',
+    underReview: 'border-b-amber-300',
+    completed: 'border-b-emerald-300',
 }
 
 export const statusBorder: {[key: string]: string} = {

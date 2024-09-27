@@ -33,7 +33,6 @@ export default function AppLayout() {
                 Coded by 
                 <a href="https://github.com/misterdan100" target="_blank" className="italic text-sky-500 hover:text-sky-300"> Daniel Caceres</a>
             </p>
-
         </footer>
 
         <ToastContainer 

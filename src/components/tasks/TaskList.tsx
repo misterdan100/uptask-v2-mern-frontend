@@ -35,7 +35,7 @@ export default function TaskList({ tasks }: TaskListProps) {
           <div key={status} className="min-w-[300px] 2xl:min-w-0 2xl:w-1/5">
 
             <h3 
-                className={`border-b-${statusStyles[status]} capitalize text-xl font-light border border-slate-300 bg-white p-3 border-b-8 `}
+                className={`${statusStyles[status]} capitalize text-xl font-light border border-slate-300 bg-white p-3 border-b-8 `}
             >{statusTranslations[status]}</h3>
 
             <ul className="mt-5 space-y-3">
