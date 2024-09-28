@@ -8,7 +8,7 @@ export default function AppLayout() {
   return (
     <>
         <header
-            className="py-5 pr-5 bg-gray-800"
+            className="py-5 pr-5 bg-sky-950"
         >
             <div className="flex flex-col items-center justify-between mx-auto max-w-screen-2xl lg:flex-row">
                 <div className="w-64">

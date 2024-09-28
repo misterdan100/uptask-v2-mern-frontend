@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 export default function AuthLayout() {
   return (
     <>
-      <div className="min-h-screen bg-gray-800">
+      <div className="min-h-screen bg-sky-950">
         <div className="py-10 lg:py-20 mx-auto w-[450px]">
           <Logo />
 
@@ -32,7 +32,11 @@ export default function AuthLayout() {
         </footer>
       </div>
 
-      <ToastContainer />
+      <ToastContainer 
+        hideProgressBar
+        closeOnClick
+        autoClose={4000}
+      />
     </>
   );
 }
