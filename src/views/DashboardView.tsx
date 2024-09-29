@@ -1,15 +1,16 @@
 import { deleteProject, getProjects } from "@/apis/ProjectAPI";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { toast } from "react-toastify";
 
 export default function DashboardView() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["projects"],
     queryFn: getProjects,
+    retry: false
   });
 
   const queryClient = useQueryClient()
@@ -22,10 +23,8 @@ export default function DashboardView() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({queryKey: ['projects']})
       toast.success(data)
-    }
+    },
   })
-
-  if (isLoading) return "Loading...";
 
   if (data)
     return (

@@ -21,6 +21,7 @@ export default function LoginView() {
       toast.error(error.message)
     },
     onSuccess: () => {
+      toast.success('Session started')
       reset()
       navigate('/')
     }
