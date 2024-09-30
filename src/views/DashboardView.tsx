@@ -5,9 +5,12 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { toast } from "react-toastify";
+import { useAuth } from "@/hooks/useAuth";
+import { isManager } from "@/utils/policies";
 
 export default function DashboardView() {
-  const { data } = useQuery({
+  const { data: user, isLoading: authLoading} = useAuth()
+  const { data, isLoading } = useQuery({
     queryKey: ["projects"],
     queryFn: getProjects,
     retry: false
@@ -26,7 +29,9 @@ export default function DashboardView() {
     },
   })
 
-  if (data)
+  if(isLoading || authLoading) return 'Loading...'
+
+  if (data && user)
     return (
       <>
         <div className="flex flex-wrap justify-between ">
@@ -56,12 +61,20 @@ export default function DashboardView() {
               >
                 <div className="flex min-w-0 gap-x-4">
                   <div className="flex-auto min-w-0 space-y-2">
+                    <div className="flex justify-start gap-4">
                     <Link
                       to={`/projects/${project._id}`}
                       className="text-3xl font-bold text-gray-600 transition-colors cursor-pointer hover:text-orange-400"
                     >
                       {project.projectName}
                     </Link>
+                      {isManager(project.manager, user._id) ? (
+                        <p className="self-end inline-block px-5 py-1 text-xs font-bold text-green-500 uppercase rounded-lg bg-green-50">Manager</p>
+                      ) : (
+                        <p className="self-end inline-block px-5 py-1 text-xs font-bold text-indigo-500 uppercase rounded-lg bg-indigo-50">Collaborator</p>
+                      )}
+                    </div>
+
                     <p className="text-sm text-gray-400">
                       Client: 
                       <span className="font-semibold text-gray-500"> {project.clientName}</span>
@@ -98,23 +111,27 @@ export default function DashboardView() {
                             View Project
                           </Link>
                         </Menu.Item>
-                        <Menu.Item>
-                          <Link
-                            to={`/projects/${project._id}/edit`}
-                            className="block px-3 py-1 text-sm leading-6 text-gray-900 transition-colors hover:bg-gray-100"
-                          >
-                            Edit Project
-                          </Link>
-                        </Menu.Item>
-                        <Menu.Item >
-                          <button
-                            type="button"
-                            className="inline w-full px-3 py-1 text-sm leading-6 text-left text-red-500 transition-colors hover:bg-gray-100"
-                            onClick={() => mutate(project._id)}
-                          >
-                            Delete Project
-                          </button>
-                        </Menu.Item>
+                        {isManager(project.manager, user._id) && (<>
+                            <Menu.Item>
+                            <Link
+                              to={`/projects/${project._id}/edit`}
+                              className="block px-3 py-1 text-sm leading-6 text-gray-900 transition-colors hover:bg-gray-100"
+                            >
+                              Edit Project
+                            </Link>
+                          </Menu.Item>
+                          
+                          
+                          <Menu.Item >
+                            <button
+                              type="button"
+                              className="inline w-full px-3 py-1 text-sm leading-6 text-left text-red-500 transition-colors hover:bg-gray-100"
+                              onClick={() => mutate(project._id)}
+                            >
+                              Delete Project
+                            </button>
+                          </Menu.Item>
+                        </>)}
                       </Menu.Items>
                     </Transition>
                   </Menu>
