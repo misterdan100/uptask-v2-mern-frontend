@@ -8,3 +8,12 @@ export function formatDate(isoString: string) : string {
     })
     return formatter.format(data)
 }
+
+export function capitalizeName(name: string): string {
+    const capitalized = name.split(' ').map(item => {
+      let newItem = [...item]
+      newItem[0] = newItem[0].toUpperCase()
+      return newItem.join('')
+    })
+    return capitalized.join(' ')
+  }

@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AddMemberForm from './AddMemberForm';
+import { XMarkIcon } from '@heroicons/react/20/solid';
 
 export default function AddMemberModal() {
 
@@ -40,6 +41,11 @@ export default function AddMemberModal() {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className="w-full max-w-4xl p-12 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                                    <div className='absolute w-10 h-10 text-gray-400 cursor-pointer right-12 top-10 hover:text-gray-500'
+                                    onClick={() => {navigate(location.pathname, {replace: true})}}
+                                    >
+                                        <XMarkIcon />
+                                    </div>
                                     <Dialog.Title
                                         as="h3"
                                         className="my-3 text-4xl font-black"

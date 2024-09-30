@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import api from "@/lib/axios";
-import { Project, TeamMember, TeamMemberForm } from "@/types";
+import { Project, TeamMember, TeamMemberForm, teamProjecSchema } from "@/types";
 
 export const findUserByEmail = async ({projectId, formData} : {projectId: Project['_id'], formData: TeamMemberForm}) => {
     try {
@@ -14,15 +14,42 @@ export const findUserByEmail = async ({projectId, formData} : {projectId: Projec
     }
 }
 
-export const addUserByEmail = async ({projectId, userId}: {projectId: Project['_id'], userId: TeamMember['_id']}) => {
+export const addUserToProject = async ({projectId, id}: {projectId: Project['_id'], id: TeamMember['_id']}) => {
     try {
         const url = `/projects/${projectId}/team`
-        const { data } = await api.post(url, {id: userId})
+        const { data } = await api.post<string>(url, {id})
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
         }
     }
-    
+}
+
+export async function getProjectTeam(projectId: Project['_id']) {
+    try {
+        const url = `/projects/${projectId}/team`
+        const { data } = await api(url)
+        const response = teamProjecSchema.safeParse(data)
+        if(response.success) {
+            return response.data
+        }
+    } catch (error) {
+        if(isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
+export async function deleteUser({projectId, userId}: {projectId: Project['_id'], userId: TeamMember['_id']}) {
+    try {
+        const url = `/projects/${projectId}/team/${userId}`
+        const { data } = await api.delete<string>(url)
+        return data
+    } catch (error) {
+        if(isAxiosError(error) && error.response) {
+            console.log(error)
+            throw new Error(error.response.data.error)
+        }
+    }
 }
