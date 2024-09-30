@@ -1,13 +1,13 @@
 import { deleteProject, getProjects } from "@/apis/ProjectAPI";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { toast } from "react-toastify";
 
 export default function DashboardView() {
-  const { data, isLoading, isError } = useQuery({
+  const { data } = useQuery({
     queryKey: ["projects"],
     queryFn: getProjects,
     retry: false

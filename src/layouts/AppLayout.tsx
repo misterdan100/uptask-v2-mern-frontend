@@ -14,7 +14,7 @@ export default function AppLayout() {
         return <Navigate to='/auth/login'/>
     }
 
-  return (
+  if(data) return (
     <>
         <header
             className="py-5 pr-5 bg-sky-950"
@@ -26,7 +26,9 @@ export default function AppLayout() {
                     </Link>
                 </div>
 
-                <NavMenu />
+                <NavMenu 
+                    name={data.name}
+                />
             </div>
 
         </header>
@@ -35,8 +37,8 @@ export default function AppLayout() {
         </section>
 
         <footer className="py-5 ">
-            <p className="text-center">
-                Todos los derechos reservados {new Date().getFullYear()}
+            <p className="text-center text-gray-400 ">
+                © {new Date().getFullYear()} Todos los derechos reservados 
             </p>
             <p className="text-sm italic text-center text-gray-400 transition">
                 Coded by 

@@ -16,7 +16,7 @@ export default function AuthLayout() {
 
         <footer className="py-5 text-gray-500">
           <p className="text-center">
-            Todos los derechos reservados {new Date().getFullYear()}
+          © {new Date().getFullYear()} Todos los derechos reservados
           </p>
           <p className="text-sm italic text-center text-gray-500 transition">
             Coded by

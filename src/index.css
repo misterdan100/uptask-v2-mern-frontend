@@ -2,6 +2,11 @@
     @apply px-10 py-2 text-xl font-semibold text-white transition-colors bg-orange-300 border-2 border-transparent cursor-pointer hover:bg-orange-400 rounded-2xl hover:border-orange-500 hover:shadow-sm;
 }
 
+.btn-normal-dark {
+    @apply btn-normal;
+    @apply bg-orange-400 hover:bg-orange-500
+}
+
 .btn-intense {
     @apply btn-normal ;
     @apply text-gray-800 bg-orange-100 border-orange-300 hover:bg-orange-200 hover:border-orange-300;
