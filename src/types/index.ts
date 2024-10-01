@@ -32,12 +32,19 @@ export type User = z.infer<typeof userSchema>
 
 /** TASK TYPES */
 export const taskStatusSchema = z.enum(["pending" , "onHold", "inProgress", "underReview" , "completed"])
+const changeHistorySchema = z.object({
+    _id: z.string(),
+    change: z.string(), 
+    changeBy: userSchema.pick({_id:true, name: true}),
+    changeDate: z.string(),
+})
 export const taskSchema = z.object({
     _id: z.string(),
     name: z.string(),
     description: z.string(),
     project: z.string(),
     status: taskStatusSchema,
+    changeHistory: z.array(changeHistorySchema),
     createdAt: z.string(),
     updatedAt: z.string(),
 })

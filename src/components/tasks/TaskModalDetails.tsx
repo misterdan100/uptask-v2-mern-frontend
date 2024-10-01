@@ -9,7 +9,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getTaskById, updateStatus } from "@/apis/TaskAPI";
 import { toast } from "react-toastify";
-import { formatDate } from "@/utils";
+import { capitalizeName, formatDate } from "@/utils";
 import { statusTranslations } from "@/locales/es";
 import { Task } from "@/types";
 import { XMarkIcon } from "@heroicons/react/20/solid";
@@ -121,6 +121,11 @@ export default function TaskModalDetails() {
                     <p className="mb-2 text-lg text-slate-500">
                       Description: {data.description}
                     </p>
+                    <p>
+                        <span className="font-bold text-slate-600 ">Last updated by: </span>
+                        {capitalizeName(data.changeHistory[data.changeHistory.length -1].changeBy.name)}
+                      </p>
+                 
                     <div className="flex flex-col my-5 space-y-1">
                       <label className="font-bold">Current Status:</label>
 
@@ -139,6 +144,19 @@ export default function TaskModalDetails() {
                           )
                         )}
                       </select>
+                    </div>
+
+                    <div>
+                      <p className="font-bold">Change History</p>
+                      {data.changeHistory.map(change => (
+                        <p key={change._id}>
+                          {change.change} by 
+                          <span className="font-bold text-slate-600"> {capitalizeName(change.changeBy.name)} </span>
+                           {" "}on {" "}
+                          <span className="text-xs italic text-slate-500">({change.changeDate.slice(0,10)})</span>
+                          
+                        </p>
+                      ))}
                     </div>
                   </Dialog.Panel>
                 </Transition.Child>

@@ -30,7 +30,6 @@ export async function getTaskById({taskId, projectId}: Pick<TaskAPI, 'taskId' | 
         if(isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
         }
-        
     }
 }
 
