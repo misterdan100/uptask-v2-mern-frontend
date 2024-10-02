@@ -14,6 +14,7 @@ import { statusTranslations } from "@/locales/es";
 import { Task } from "@/types";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { statusBorder, statusOutline } from "@/locales/statusStyles";
+import NotesPanel from "../notes/NotesPanel";
 
 export default function TaskModalDetails() {
   const navigate = useNavigate();
@@ -146,18 +147,21 @@ export default function TaskModalDetails() {
                       </select>
                     </div>
 
+                    <NotesPanel notes={data.notes}/>
+
                     <div>
-                      <p className="font-bold">Change History</p>
+                      <p className="my-5 text-2xl font-bold text-slate-600">Change History</p>
                       {data.changeHistory.map(change => (
                         <p key={change._id}>
-                          {change.change} by 
-                          <span className="font-bold text-slate-600"> {capitalizeName(change.changeBy.name)} </span>
-                           {" "}on {" "}
+                          <span className="font-semibold text-slate-600">{capitalizeName(change.changeBy.name)}:  </span>
+                          {change.change}
+                           {" "}
                           <span className="text-xs italic text-slate-500">({change.changeDate.slice(0,10)})</span>
-                          
                         </p>
                       ))}
                     </div>
+
+                    
                   </Dialog.Panel>
                 </Transition.Child>
               </div>
