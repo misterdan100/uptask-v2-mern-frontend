@@ -4,6 +4,7 @@ import { Bars3Icon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom'
 import { User } from '@/types'
 import { useQueryClient } from '@tanstack/react-query'
+import { capitalizeName } from '@/utils'
 
 type NavMenuProps = {
   name: User['name']
@@ -34,7 +35,7 @@ export default function NavMenu({name}: NavMenuProps) {
       >
         <Popover.Panel className="absolute z-10 flex w-screen mt-5 -translate-x-1/2 left-1/2 lg:max-w-min lg:-translate-x-48">
           <div className="w-full p-4 text-sm font-semibold leading-6 text-gray-900 bg-white shadow-lg lg:w-56 shrink rounded-xl ring-1 ring-gray-900/5">
-            <p className='text-center'>Hello, {name}</p>
+            <p className='text-center'>Hello, {capitalizeName(name)}</p>
             <Link
               to='/profile'
               className='block p-2 hover:text-orange-950'
