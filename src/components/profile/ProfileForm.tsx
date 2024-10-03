@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form"
 import ErrorMessage from "../ErrorMessage"
 import { User, UserProfileForm } from "@/types"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { updateProfile } from "@/apis/ProfileAPI"
+import { toast } from "react-toastify"
 
 type ProfileFormProps = {
     data: User
@@ -9,13 +12,25 @@ type ProfileFormProps = {
 export default function ProfileForm({ data }: ProfileFormProps) {
     const { register, handleSubmit, formState: { errors } } = useForm<UserProfileForm>({ defaultValues: data })
 
-    const handleEditProfile = (formData: UserProfileForm) => {}
+    const queryClient = useQueryClient()
+    const { mutate } = useMutation({
+        mutationFn: updateProfile,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+            queryClient.invalidateQueries({queryKey: ['user']})
+        }
+    })
+
+    const handleEditProfile = (formData: UserProfileForm) => {mutate(formData)}
 
     return (
         <>
             <div className="max-w-3xl mx-auto g">
-                <h1 className="text-5xl font-black ">Mi Perfil</h1>
-                <p className="mt-5 text-2xl font-light text-gray-500">Aquí puedes actualizar tu información</p>
+                <h1 className="text-5xl font-black ">My Profile</h1>
+                <p className="mt-5 text-2xl font-light text-gray-500">Update your information here</p>
 
                 <form
                     onSubmit={handleSubmit(handleEditProfile)}
@@ -33,7 +48,11 @@ export default function ProfileForm({ data }: ProfileFormProps) {
                             placeholder="Tu Nombre"
                             className="w-full inputs"
                             {...register("name", {
-                                required: "Nombre de usuario es obligatoro",
+                                required: "User name is required",
+                                minLength: {
+                                    value: 3,
+                                    message: 'Name needs min 3 characters'
+                                },
                             })}
                         />
                         {errors.name && (
@@ -52,10 +71,10 @@ export default function ProfileForm({ data }: ProfileFormProps) {
                             placeholder="Tu Email"
                             className="w-full inputs"
                             {...register("email", {
-                                required: "EL e-mail es obligatorio",
+                                required: "E-mail is required",
                                 pattern: {
                                     value: /\S+@\S+\.\S+/,
-                                    message: "E-mail no válido",
+                                    message: "E-mail not valid",
                                 },
                             })}
                         />
