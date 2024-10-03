@@ -7,6 +7,11 @@
     @apply bg-blue-200 text-blue-500 hover:border-blue-500
 }
 
+.btn-normal-red {
+    @apply btn-normal;
+    @apply bg-red-200 text-red-500 hover:border-red-500
+}
+
 .btn-intense {
     @apply btn-normal ;
     @apply text-gray-800 bg-orange-100 border-orange-300 hover:bg-orange-200 hover:border-orange-300;

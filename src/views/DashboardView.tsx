@@ -1,14 +1,16 @@
 import { deleteProject, getProjects } from "@/apis/ProjectAPI";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/useAuth";
 import { isManager } from "@/utils/policies";
+import DeleteProjectModal from "@/components/projects/DeleteProectModal";
 
 export default function DashboardView() {
+  const navigate = useNavigate()
   const { data: user, isLoading: authLoading} = useAuth()
   const { data, isLoading } = useQuery({
     queryKey: ["projects"],
@@ -126,7 +128,7 @@ export default function DashboardView() {
                             <button
                               type="button"
                               className="inline w-full px-3 py-1 text-sm leading-6 text-left text-red-500 transition-colors hover:bg-gray-100"
-                              onClick={() => mutate(project._id)}
+                              onClick={() => navigate(location.pathname + `?deleteProject=${project._id}`)}
                             >
                               Delete Project
                             </button>
@@ -147,6 +149,8 @@ export default function DashboardView() {
             </Link>
           </p>
         )}
+
+        <DeleteProjectModal />
       </>
     );
 }
