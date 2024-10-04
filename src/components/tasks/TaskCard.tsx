@@ -1,18 +1,23 @@
 import { Fragment } from "react";
-import { Task } from "@/types";
+import { TaskProject } from "@/types";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteTask } from "@/apis/TaskAPI";
 import { toast } from "react-toastify";
+import { useDraggable } from "@dnd-kit/core";
 
 type TaskCardProps = {
-  task: Task;
+  task: TaskProject;
   canEdit: boolean
 };
 
 export default function TaskCard({ task, canEdit }: TaskCardProps) {
+
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: task._id,
+  })
 
   const navigate = useNavigate()
 
@@ -40,17 +45,34 @@ export default function TaskCard({ task, canEdit }: TaskCardProps) {
     })
   }
 
+  const style = transform ? {
+    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+    padding: '1.25rem',
+    backgroundColor: '#fff',
+    display: 'flex',
+    width: '300px',
+    borderWidth: '1px',
+    borderColor: 'rgb(203 2013 225 / var(--tw-boder-opacity',
+    borderRadius: '1rem',
+  } : undefined
 
+  
   return (
-    <li className="flex justify-between gap-3 p-5 bg-white border border-slate-300 rounded-2xl">
-      <div className="flex flex-col min-w-0 gap-y-2">
-        <button
-          type="button"
+    <li 
+    className="flex justify-between gap-3 p-5 bg-white border border-slate-300 rounded-2xl">
+      <div 
+        className="flex flex-col min-w-0 gap-y-2"
+        {...listeners}
+        {...attributes}
+        ref={setNodeRef}
+        style={style}
+
+      >
+        <p
           className="text-xl font-bold text-left text-slate-600"
-          onClick={() => navigate(location.pathname + `?viewTask=${task._id}`)}
         >
           {task.name}
-        </button>
+        </p>
         <p className="text-slate-500">{task.description}</p>
       </div>
       <div className="flex shrink-0 gap-x-6">

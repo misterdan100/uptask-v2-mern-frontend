@@ -67,8 +67,13 @@ export const taskSchema = z.object({
     createdAt: z.string(),
     updatedAt: z.string(),
 })
+
+export const taskProjectSchema = taskSchema.pick({_id: true, name: true, description: true, status:true})
+
 export type Task = z.infer<typeof taskSchema>
 export type TaskFormData = Pick<Task, 'name' | 'description'>
+export type TaskStatus = z.infer<typeof taskStatusSchema>
+export type TaskProject = z.infer<typeof taskProjectSchema>
 
 /** PROJECTS TYPES */
 export const projectSchemas = z.object({
@@ -76,7 +81,9 @@ export const projectSchemas = z.object({
     projectName: z.string(),
     clientName: z.string(),
     description: z.string(),
-    manager: z.string(userSchema.pick({_id: true}))
+    manager: z.string(userSchema.pick({_id: true})),
+    tasks: z.array(taskProjectSchema),
+    team: z.array(z.string(userSchema.pick({_id:true})))
 })
 
 export const dashboardProjectSchema = z.array(
@@ -88,6 +95,9 @@ export const dashboardProjectSchema = z.array(
         manager: true
     })
 )
+
+export const editProjectSchema = projectSchemas.pick({projectName: true, clientName: true, description: true})
+
 
 /** TS Types */
 export type Project = z.infer<typeof projectSchemas>
