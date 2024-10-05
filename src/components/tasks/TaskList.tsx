@@ -51,11 +51,11 @@ export default function TaskList({ tasks, canEdit }: TaskListProps) {
   const handleDragEnd = (e: DragEndEvent) => {
     const { over, active } = e
     if(over && over.id) {
-      const taskId = active.id.toString()
       const status = over.id as TaskStatus
+      const taskId = active.id.toString()
       mutate({projectId, taskId, status})
-
-      queryClient.setQueryData(['project', projectId], (prevData: Project) => {
+      
+      queryClient.setQueryData(['projectDetails', projectId], (prevData: Project) => {
         const updatedTask =  prevData.tasks.map((task) => {
           if(task._id.toString() === taskId.toString()) {
             return {
