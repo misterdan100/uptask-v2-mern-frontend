@@ -44,13 +44,13 @@ export default function LoginView() {
           <input
             id="email"
             type="email"
-            placeholder="Email de Registro"
+            placeholder="Your e-mail"
             className="w-full inputs"
             {...register("email", {
-              required: "El Email es obligatorio",
+              required: "E-mail is required",
               pattern: {
                 value: /\S+@\S+\.\S+/,
-                message: "E-mail no válido",
+                message: "E-mail not valid",
               },
             })}
           />
@@ -62,10 +62,10 @@ export default function LoginView() {
 
           <input
             type="password"
-            placeholder="Password de Registro"
+            placeholder="Your password"
             className="w-full inputs"
             {...register("password", {
-              required: "El Password es obligatorio",
+              required: "Password is required",
             })}
           />
           {errors.password && (
